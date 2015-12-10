@@ -1,0 +1,24 @@
+{
+  "name": "newfam-example",
+  "version": "1.0.0",
+  "description": "A demo app with Express 4, Angular 2, Gulp and TypeScript 1.5 ",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ejs-mate": "^2.3.0",
+    "express": "^4.13.3"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-nodemon": "^2.0.4",
+    "gulp-rimraf": "^0.2.0",
+    "gulp-typescript": "^2.10.0",
+    "gulp-watch": "^4.3.5",
+    "tsd": "^0.6.5",
+    "typescript": "^1.7.3"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "version": "v4",
+  "repo": "borisyankov/DefinitelyTyped",
+  "ref": "master",
+  "path": "typings",
+  "bundle": "typings/tsd.d.ts",
+  "installed": {
+    "node/node.d.ts": {
+      "commit": "f8af639bf29b2b00e5d27ce93c0f046564b8525c"
+    },
+    "serve-static/serve-static.d.ts": {
+      "commit": "dcecb9edd16cfe8eef47b91518703b4e42901511"
+    },
+    "express/express.d.ts": {
+      "commit": "dcecb9edd16cfe8eef47b91518703b4e42901511"
+    },
+    "mime/mime.d.ts": {
+      "commit": "dcecb9edd16cfe8eef47b91518703b4e42901511"
+    },
+    "angular2/angular2.d.ts": {
+      "commit": "f8af639bf29b2b00e5d27ce93c0f046564b8525c"
+    },
+    "es6-promise/es6-promise.d.ts": {
+      "commit": "f8af639bf29b2b00e5d27ce93c0f046564b8525c"
+    },
+    "rx/rx.d.ts": {
+      "commit": "f8af639bf29b2b00e5d27ce93c0f046564b8525c"
+    },
+    "rx/rx-lite.d.ts": {
+      "commit": "f8af639bf29b2b00e5d27ce93c0f046564b8525c"
+    }
+  }
+}
