@@ -4,13 +4,37 @@
   "description": "A demo app with Express 4, Angular 2, Gulp and TypeScript 1.5 ",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node node_modules/gulp/bin/gulp nodemon"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "assemble": "git://github.com/assemble/assemble#v0.6.0",
     "ejs-mate": "^2.3.0",
-    "express": "^4.13.3"
+    "express": "^4.13.3",
+    "gulp": "^3.8.10",
+    "gulp-autoprefixer": "^1.0.1",
+    "gulp-concat": "^2.4.1",
+    "gulp-connect": "^2.0.6",
+    "gulp-extname": "^0.2.0",
+    "gulp-load-plugins": "^0.7.0",
+    "gulp-minify-html": "^0.1.8",
+    "gulp-nodemon": "^2.0.4",
+    "gulp-rev": "^2.0.1",
+    "gulp-rimraf": "^0.2.0",
+    "gulp-sass": "^1.2.2",
+    "gulp-template": "^1.1.1",
+    "gulp-typescript": "^2.10.0",
+    "gulp-uglify": "^1.0.1",
+    "gulp-usemin": "^0.3.8",
+    "gulp-util": "^3.0.1",
+    "gulp-watch": "^4.3.5",
+    "lodash": "^2.4.1",
+    "marked": "^0.3.2",
+    "mongoose": "^4.3.0",
+    "tsd": "^0.6.5",
+    "typescript": "^1.7.3"
   },
   "devDependencies": {
     "gulp": "^3.9.0",
