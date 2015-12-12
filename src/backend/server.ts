@@ -55,28 +55,28 @@ app.get('/', (req, res) => {
 });
 
 app.get('/register', (req, res) => {
-	// var newDriver = new Driver({
-	// 	uid: 1001,
-	// 	name: 'Ravi Kumar Sha',
-	// 	from: {
-	// 		name: 'Gurgaon, Sector-57',
-	// 		lng: 28.4880432,
-	// 		lat: 77.0622027
-	// 	},
-	// 	to: {
-	// 		name: 'Nagarro, Sector-18',		
-	// 		lng: 28.490027,
-	// 		lat: 77.0255228
-	// 	},
-	// 	boardingPoints: [],
-	// 	startTime: new Date(),
-	// 	price: 20,
-	// 	seats: 3,
-	// 	catType: 'Hatchback',
-	// 	remarks: 'Hello World',
-	// 	routeId: 'PG4#$L1',
-	// 	createdOn: {type: Date, default: Date.now}
-	// });
+	 var newDriver = new Driver({
+	 	uid: 1001,
+	 	name: 'Ravi Kumar Sha',
+	 	from: {
+	 		name: 'Gurgaon, Sector-57',
+	 		lng: 28.4880432,
+	 		lat: 77.0622027
+	 	},
+	 	to: {
+	 		name: 'Nagarro, Sector-18',
+	 		lng: 28.490027,
+	 		lat: 77.0255228
+	 	},
+	 	boardingPoints: [],
+	 	startTime: new Date(),
+	 	price: 20,
+	 	seats: 3,
+	 	catType: 'Hatchback',
+	 	remarks: 'Hello World',
+	 	routeId: 'PG4#$L1',
+	 	createdOn: {type: Date, default: Date.now}
+	 });
 	
 	res.send('Hello World');
 	
