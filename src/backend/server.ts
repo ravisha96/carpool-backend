@@ -6,8 +6,9 @@ var viewRenderingEngine = require('ejs-mate');
 var bodyParser = require('body-parser');
 var app: express.Express = express();
 
-
-db.connect('mongodb://nagarro:carpool@ds035014.mongolab.com:35014/heroku_55xgjmp3');
+var environment:string = process.env.NODE_ENV || 'development';
+var mongoConfig:string = (environment === 'development') ? 'localhost:27017/carpool' : 'mongodb://nagarro:carpool@ds035014.mongolab.com:35014/heroku_55xgjmp3';
+db.connect(mongoConfig);
 
 var CordinateSchema = new db.Schema({
 	name: String,
@@ -83,7 +84,7 @@ app.get('/register', (req, res) => {
 	});
 });
 
-var port: number = process.env.PORT || 3000;
+var port: number = process.env.PORT || 8000;
 var server = app.listen(port, () => {
 	var listeningPort: number = server.address().port;
 	console.log('The server is listening on port: ' + listeningPort);
