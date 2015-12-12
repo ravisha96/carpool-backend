@@ -4,7 +4,7 @@ import path = require('path');
 import db = require('mongoose');
 var viewRenderingEngine = require('ejs-mate');
 var bodyParser = require('body-parser');
-var app : express.Express = express();
+var app: express.Express = express();
 
 
 db.connect('mongodb://nagarro:carpool@ds035014.mongolab.com:35014/heroku_55xgjmp3');
@@ -28,7 +28,7 @@ var DriverSchema = new db.Schema({
 	catType: String,
 	remarks: String,
 	routeId: String,
-	createdOn: {type: Date, default: Date.now}
+	createdOn: { type: Date, default: Date.now }
 });
 
 var Driver = db.model('Driver', DriverSchema);
@@ -54,7 +54,7 @@ app.get('/', (req, res) => {
 	res.render('index');
 });
 
-app.get('/api/register', (req, res) => {
+app.get('/register', (req, res) => {
 	// var newDriver = new Driver({
 	// 	uid: 1001,
 	// 	name: 'Ravi Kumar Sha',
