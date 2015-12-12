@@ -78,11 +78,9 @@ app.get('/register', (req, res) => {
 	 	createdOn: {type: Date, default: Date.now}
 	 });
 	
-	res.send('Hello World');
-	
-	// newDriver.save(function (err) {
-	// 	res.status(200).json(newDriver);
-	// });
+	newDriver.save(function (err) {
+		res.status(200).json(newDriver);
+	});
 });
 
 var port: number = process.env.PORT || 3000;
