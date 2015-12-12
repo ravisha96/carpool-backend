@@ -11,27 +11,13 @@
         "./**/*.ts",
         "!./node_modules/**/*.ts"
     ],
-    "files": [
-        "./globals.ts",
-        "./linter.ts",
-        "./main/atom/atomUtils.ts",
-        "./main/atom/autoCompleteProvider.ts",
-        "./worker/messages.ts",
-        "./worker/parent.ts"
-    ],
-    
-    "formatCodeOptions": {
-        "indentSize": 4,
-        "tabSize": 4,
-        "newLineCharacter": "\r\n",
-        "convertTabsToSpaces": true,
-        "insertSpaceAfterCommaDelimiter": true,
-        "insertSpaceAfterSemicolonInForStatements": true,
-        "insertSpaceBeforeAndAfterBinaryOperators": true,
-        "insertSpaceAfterKeywordsInControlFlowStatements": true,
-        "insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
-        "insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": false,
-        "placeOpenBraceOnNewLineForFunctions": false,
-        "placeOpenBraceOnNewLineForControlBlocks": false
-    }
+    "exclude": [
+       "node_modules",
+       "bower_components",
+       "lib/libFileToExclude.d.ts"
+     ],
+     "scripts": {
+        "postbuild": "echo after building"
+    },
+    "buildOnSave": true
 }
