@@ -1,39 +1,15 @@
 /// <reference path="../../typings/tsd.d.ts" />
+
 import express = require('express');
 import path = require('path');
 import db = require('mongoose');
+import router = require('./router');
+var setting = require('./config').setting;
 var viewRenderingEngine = require('ejs-mate');
 var bodyParser = require('body-parser');
 var app: express.Express = express();
-
-var environment:string = process.env.NODE_ENV || 'development';
-var mongoConfig:string = (environment === 'development') ? 'localhost:27017/carpool' : 'mongodb://nagarro:carpool@ds035014.mongolab.com:35014/heroku_55xgjmp3';
-db.connect(mongoConfig);
-
-var CordinateSchema = new db.Schema({
-	name: String,
-	lng: Number,
-	lat: Number
-});
-
-var DriverSchema = new db.Schema({
-	uid: Number,
-	name: String,
-	from: CordinateSchema,
-	to: CordinateSchema,
-	boardingPoints: [CordinateSchema],
-	startTime: Date,
-	returnTime: Date,
-	price: Number,
-	seats: Number,
-	catType: String,
-	remarks: String,
-	routeId: String,
-	createdOn: { type: Date, default: Date.now }
-});
-
-var Driver = db.model('Driver', DriverSchema);
-
+db.connect(setting.db.config);
+var routes = new router(db);
 app.engine('html', viewRenderingEngine);
 app.set('view engine', 'html'); // so you can render('index')
 
@@ -55,36 +31,9 @@ app.get('/', (req, res) => {
 	res.render('index');
 });
 
-app.get('/register', (req, res) => {
-	 var newDriver = new Driver({
-	 	uid: 1001,
-	 	name: 'Ravi Kumar Sha',
-	 	from: {
-	 		name: 'Gurgaon, Sector-57',
-	 		lng: 28.4880432,
-	 		lat: 77.0622027
-	 	},
-	 	to: {
-	 		name: 'Nagarro, Sector-18',
-	 		lng: 28.490027,
-	 		lat: 77.0255228
-	 	},
-	 	boardingPoints: [],
-	 	startTime: new Date(),
-	 	price: 20,
-	 	seats: 3,
-	 	catType: 'Hatchback',
-	 	remarks: 'Hello World',
-	 	routeId: 'PG4#$L1',
-	 	createdOn: {type: Date, default: Date.now}
-	 });
-	
-	newDriver.save(function (err) {
-		res.status(200).json(newDriver);
-	});
-});
+app.post('/register', routes.RegisterDriver); 
 
-var port: number = process.env.PORT || 8000;
+var port: number = process.env.PORT || 8001;
 var server = app.listen(port, () => {
 	var listeningPort: number = server.address().port;
 	console.log('The server is listening on port: ' + listeningPort);

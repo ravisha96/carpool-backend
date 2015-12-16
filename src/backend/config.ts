@@ -4,7 +4,7 @@ module.exports.setting = (function () {
 	
 	return {
 		db: {
-			config: (environment === 'development') ? 'localhost:27017/carpool' : 'mongodb://nagarro:carpool@ds033255.mongolab.com:33255/heroku_sgtzfsk1'
+			config: (environment === 'development') ? 'localhost:27017/carpool' : 'mongodb://carpool:nagarro@ds035014.mongolab.com:35014/heroku_55xgjmp3'
 		}
 	}
 	

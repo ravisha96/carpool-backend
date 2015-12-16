@@ -32,7 +32,6 @@
     "gulp-usemin": "^0.3.8",
     "gulp-util": "^3.0.1",
     "gulp-watch": "^4.3.5",
-    "lodash": "^2.4.1",
     "marked": "^0.3.2",
     "mongoose": "^4.3.0",
     "tsd": "^0.6.5",
