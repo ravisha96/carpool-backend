@@ -1,5 +1,6 @@
 import mongoose = require('mongoose');
-import driverModel = require('./models/driver.register.schema');
+var driverModel = require('./models/driver.register.schema');
+var loginModel = require('./models/user.login.schema');
 
 class Router {
 	
@@ -8,8 +9,24 @@ class Router {
 	}
 	
 	public RegisterDriver = (req, res) => {
-		var driver = this.db.model('driver', new driverModel().DriverSchema());
-		res.sendStatus(200).json(driver);
+		var driverSchema = new driverModel(req.body);
+		driverSchema.save(function () {
+			res.send(driverSchema);
+		});
+	}
+	
+	public LoginDriver = (req, res) => {
+		var loginSchema = new loginModel(req.body);
+		loginSchema.save(function () {
+			res.send(loginSchema);
+		});
+	}
+	
+	public Login = (req, res) => {
+		var loginSchema = new loginModel(req.body);
+		loginSchema.save(function () {
+			res.send(loginSchema);
+		});
 	}
 	
 }

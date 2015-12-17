@@ -31,9 +31,10 @@ app.get('/', (req, res) => {
 	res.render('index');
 });
 
+app.post('/login', routes.LoginDriver);
 app.post('/register', routes.RegisterDriver); 
 
-var port: number = process.env.PORT || 8001;
+var port: number = process.env.PORT || 800;
 var server = app.listen(port, () => {
 	var listeningPort: number = server.address().port;
 	console.log('The server is listening on port: ' + listeningPort);
