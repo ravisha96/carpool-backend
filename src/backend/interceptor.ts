@@ -20,7 +20,6 @@ class Interceptor {
 	 * Token is then validated and matched from DB.
 	 */
 	public Auth = (req, res, next) => {
-		console.log(req.headers);
 		next();
 	}
 }

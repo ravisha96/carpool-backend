@@ -1,4 +1,4 @@
-class UpdateCurrentLocation{
+class UpdateCurrentLocation {
     public db = require('mongoose');
     public schema = this.db.Schema;
     
@@ -13,3 +13,6 @@ class UpdateCurrentLocation{
     });
     
 }
+
+var UpdateCurrentLocationSchema = new UpdateCurrentLocation();
+module.exports = UpdateCurrentLocationSchema.db.model('CurrentLocation', UpdateCurrentLocationSchema.LocationSchema);

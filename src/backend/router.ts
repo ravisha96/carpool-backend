@@ -1,8 +1,9 @@
 import mongoose = require('mongoose');
-var driverModel = require('./models/driver.register.schema');
-var loginModel = require('./models/user.login.schema');
-var passengerModel = require('./models/passenger.register.schema');
-var updateCurrentLocationModel = require('./models/update.current.location.schema');
+var DriverModel = require('./models/driver.register.schema');
+var LoginModel = require('./models/user.login.schema');
+var PassengerModel = require('./models/passenger.register.schema');
+var updateCurrentLocation = require('./controllers/update.current.location');
+var UpdateCurrentLocationModel = require('./models/update.current.location.schema');
 
 class Router {
 	
@@ -11,44 +12,46 @@ class Router {
 	}
     
     public Authenticate = (req, res) => {
-		var loginSchema = new loginModel(req.body);
+		var loginSchema = new LoginModel(req.body);
 		loginSchema.save( (): void => {
 			res.send(loginSchema);
 		});
 	}
     
     public LoginDriver = (req, res) => {
-		loginModel.findOne(req.body, (err: String, results: Object) => {
+		LoginModel.findOne(req.body, (err: String, results: Object) => {
 			res.send(results);
 		});
 	}
 	
 	public RegisterDriver = (req, res) => {
-		var driverSchema = new driverModel(req.body);
-        var locationSchema = new updateCurrentLocationModel({
+		var driverSchema = new DriverModel(req.body);
+        
+        var locationSchema = new UpdateCurrentLocationModel({
             uid: req.body.uid,
             lat: req.body.from.lat,
             lng: req.body.from.lng, 
         });
+        
 		driverSchema.save( (): void => {
-            locationSchema.save((): void => {
+            locationSchema.save( (): void => {
                res.send(driverSchema);
             });
 		});
 	}
     
     public RegisterPassenger = (req, res) => {
-        var passengerSchema = new passengerModel(req.body);
+        var passengerSchema = new PassengerModel(req.body);
         passengerSchema.save( (): void => {
            res.send(passengerSchema); 
         });
     }
     
     public UpdateCurrentLocation = (req, res) => {
-        var schema = new updateCurrentLocationModel(req.body);
-        schema.save( (): void => {
-            res.send(schema);
-        });
+        // var schema = new UpdateCurrentLocationModel(req.body);
+        // schema.save( (): void => {
+        //     res.send(schema);
+        // });
     }
 
 	
