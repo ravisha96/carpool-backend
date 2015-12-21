@@ -1,7 +1,7 @@
 {
-  "name": "newfam-example",
+  "name": "Carpool",
   "version": "1.0.0",
-  "description": "A demo app with Express 4, Angular 2, Gulp and TypeScript 1.5 ",
+  "description": "A carpooling tool especially developed for Nagarro Softwares. ",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -32,8 +32,10 @@
     "gulp-usemin": "^0.3.8",
     "gulp-util": "^3.0.1",
     "gulp-watch": "^4.3.5",
+    "jsonwebtoken": "^5.4.1",
     "marked": "^0.3.2",
     "mongoose": "^4.3.0",
+    "morgan": "^1.6.1",
     "tsd": "^0.6.5",
     "typescript": "^1.7.3"
   },

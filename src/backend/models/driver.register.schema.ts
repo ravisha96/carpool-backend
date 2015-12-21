@@ -13,7 +13,7 @@ class DriverRegistration {
 	});
 	
 	public DriverSchema = new this.schema({
-		uid: Number,
+		uid: String,
 		name: String,
 		from: this.CordinateSchema,
 		to: this.CordinateSchema,

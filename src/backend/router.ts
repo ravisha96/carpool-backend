@@ -1,6 +1,7 @@
 import mongoose = require('mongoose');
 var driverModel = require('./models/driver.register.schema');
 var loginModel = require('./models/user.login.schema');
+var passengerModel = require('./models/passenger.register.schema');
 
 class Router {
 	
@@ -10,24 +11,30 @@ class Router {
 	
 	public RegisterDriver = (req, res) => {
 		var driverSchema = new driverModel(req.body);
-		driverSchema.save(function () {
+		driverSchema.save( (): void => {
 			res.send(driverSchema);
 		});
 	}
 	
 	public LoginDriver = (req, res) => {
-		var loginSchema = new loginModel(req.body);
-		loginSchema.save(function () {
-			res.send(loginSchema);
+		loginModel.findOne(req.body, (err: String, results: Object) => {
+			res.send(results);
 		});
 	}
 	
-	public Login = (req, res) => {
+	public Authenticate = (req, res) => {
 		var loginSchema = new loginModel(req.body);
-		loginSchema.save(function () {
+		loginSchema.save( (): void => {
 			res.send(loginSchema);
 		});
 	}
+    
+    public RegisterPassenger = (req, res) => {
+        var passengerSchema = new passengerModel(req.body);
+        passengerSchema.save( (): void => {
+           res.send(passengerSchema); 
+        });
+    }
 	
 }
 
