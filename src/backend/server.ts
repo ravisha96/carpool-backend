@@ -34,6 +34,7 @@ app.post('/api/login', routes.LoginDriver);
 app.post('/api/registerDriver', routes.RegisterDriver);
 app.post('/api/registerPassenger', routes.RegisterPassenger);
 app.post('/api/authenticate', routes.Authenticate);
+app.post('/api/updateCurrentLocation', routes.UpdateCurrentLocation);
 
 var port: number = process.env.PORT || 3803;
 var server = app.listen(port, () => {
