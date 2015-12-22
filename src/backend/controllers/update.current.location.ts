@@ -12,10 +12,10 @@ class UpdateCurrentLocationController {
          * Heroku won't actually allow us to use WebSockets so we have to setup polling instead.
          * https://devcenter.heroku.com/articles/using-socket-io-with-node-js-on-heroku
          */
-        this.io.configure((): void => {
-            this.io.set("transports", ["xhr-polling"]);
-            this.io.set("polling duration", 20);
-        });
+        // this.io.configure((): void => {
+        //     this.io.set("transports", ["xhr-polling"]);
+        //     this.io.set("polling duration", 20);
+        // });
 
         this.io.on('connection', (socket) => {
 
