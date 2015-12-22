@@ -47,10 +47,10 @@ app.post('/api/authenticate', routes.Authenticate);
 // app.post('/api/updateCurrentLocation', routes.UpdateCurrentLocation);
 app.post('/api/updateCurrentLocation', (req, res) => {
 
-    io.configure((): void => {
-        io.set("transports", ["xhr-polling"]);
-        io.set("polling duration", 20);
-    });
+    // io.configure((): void => {
+    //     io.set("transports", ["xhr-polling"]);
+    //     io.set("polling duration", 20);
+    // });
 
     io.on('connection', (socket) => {
 
