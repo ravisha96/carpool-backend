@@ -10,17 +10,14 @@ var viewRenderingEngine = require('ejs-mate');
 var bodyParser = require('body-parser');
 var app: express.Express = express();
 var jwt = require('jsonwebtoken');      // used to create, sign and verify tokens.
-var io = require('socket.io');
 // Connecting to mongodb.
 db.connect(setting.db.config);
 
 var routes = new router(db);
 
-var port: number = process.env.PORT || 8904;
-var server = app.listen(port, () => {
-    var listeningPort: number = server.address().port;
-    console.log('The server is listening on port: ' + listeningPort);
-});
+var port: number = process.env.PORT || 8000;
+var server = app.listen(port);
+var io = require('socket.io').listen(server);
 
 app.engine('html', viewRenderingEngine);
 app.set('view engine', 'html'); // so you can render('index')
@@ -44,21 +41,14 @@ app.post('/api/login', routes.LoginDriver);
 app.post('/api/registerDriver', routes.RegisterDriver);
 app.post('/api/registerPassenger', routes.RegisterPassenger);
 app.post('/api/authenticate', routes.Authenticate);
-// app.post('/api/updateCurrentLocation', routes.UpdateCurrentLocation);
-app.post('/api/updateCurrentLocation', (req, res) => {
+app.post('/api/updateCurrentLocation', routes.UpdateCurrentLocation);
+io.of('/api/updateCurrentLocation').on('connection', (socket) => {
 
-    // io.configure((): void => {
-    //     io.set("transports", ["xhr-polling"]);
-    //     io.set("polling duration", 20);
-    // });
+    console.log('connected');
 
-    io.on('connection', (socket) => {
-
-        console.log('connected');
-
-        socket.emit('location:update:waiting');
-
+    socket.emit('location:update:waiting');
+    
+    socket.on('location:update', function (data) {
+        console.log(data);   
     });
 });
-
-io.listen(server);
