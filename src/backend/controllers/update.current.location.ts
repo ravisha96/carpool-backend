@@ -2,33 +2,31 @@
  * UpdateCurrentLocationController class will update the drivers current location
  * using push notification service.
  */
+interface IUpdateLocation{
+    uid: String,
+    lat: Number,
+    lng: Number
+}
+
 class UpdateCurrentLocationController {
-
-    public io = require('socket.io');
-
-    constructor(public req, public res, public app) {
         
-        /**
-         * Heroku won't actually allow us to use WebSockets so we have to setup polling instead.
-         * https://devcenter.heroku.com/articles/using-socket-io-with-node-js-on-heroku
-         */
-        // this.io.configure((): void => {
-        //     this.io.set("transports", ["xhr-polling"]);
-        //     this.io.set("polling duration", 20);
-        // });
-
-        this.io.on('connection', (socket) => {
-
-            console.log('connected');
-
-            socket.emit('location:update:waiting');
-
+    constructor(public socket, public UpdateCurrentLocationModel) {
+        this.UpdateCurrentLocationModel = require('./../models/update.current.location.schema');
+        this.socket.emit('location:update:waiting');
+        this.socket.on('location:update', this.updateLocation);
+    }
+    
+    /**
+     * Update the current users location in DB.
+     */
+    private updateLocation = (data: IUpdateLocation) => {
+        var condition = {uid: data.uid},
+            update = {lat: data.lat, lng: data.lng};
+        console.log('updating :' + this.UpdateCurrentLocationModel);
+        this.UpdateCurrentLocationModel.update(condition, update, (err, numberAffected, response) => {
+            this.socket.emit('location:updated', numberAffected);
         });
     }
-
-
-
-
 }
 
 module.exports = UpdateCurrentLocationController;

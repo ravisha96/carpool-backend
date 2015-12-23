@@ -5,6 +5,8 @@ import path = require('path');
 import db = require('mongoose');
 import router = require('./router');
 import interceptor = require('./interceptor');
+
+var UpdateCurrentLocation = require('./controllers/update.current.location');
 var setting = require('./config').setting;
 var viewRenderingEngine = require('ejs-mate');
 var bodyParser = require('body-parser');
@@ -15,7 +17,7 @@ db.connect(setting.db.config);
 
 var routes = new router(db);
 
-var port: number = process.env.PORT || 8000;
+var port: number = process.env.PORT || 9000;
 var server = app.listen(port);
 var io = require('socket.io').listen(server);
 
@@ -37,18 +39,7 @@ app.get('/', (req, res) => {
 });
 
 app.post('/api/login', routes.LoginDriver);
-
 app.post('/api/registerDriver', routes.RegisterDriver);
 app.post('/api/registerPassenger', routes.RegisterPassenger);
 app.post('/api/authenticate', routes.Authenticate);
-app.post('/api/updateCurrentLocation', routes.UpdateCurrentLocation);
-io.of('/api/updateCurrentLocation').on('connection', (socket) => {
-
-    console.log('connected');
-
-    socket.emit('location:update:waiting');
-    
-    socket.on('location:update', function (data) {
-        console.log(data);   
-    });
-});
+io.of('/api/updateCurrentLocation').on('connection', UpdateCurrentLocation);

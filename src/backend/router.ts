@@ -2,7 +2,6 @@ import mongoose = require('mongoose');
 var DriverModel = require('./models/driver.register.schema');
 var LoginModel = require('./models/user.login.schema');
 var PassengerModel = require('./models/passenger.register.schema');
-var updateCurrentLocation = require('./controllers/update.current.location');
 var UpdateCurrentLocationModel = require('./models/update.current.location.schema');
 
 class Router {
@@ -46,14 +45,6 @@ class Router {
            res.send(passengerSchema); 
         });
     }
-    
-    public UpdateCurrentLocation = (req, res) => {
-        // var schema = new UpdateCurrentLocationModel(req.body);
-        // schema.save( (): void => {
-        //     res.send(schema);
-        // });
-    }
-
 	
 }
 
