@@ -17,7 +17,7 @@ db.connect(setting.db.config);
 
 var routes = new router(db);
 
-var port: number = process.env.PORT || 9000;
+var port: number = process.env.PORT || 9001;
 var server = app.listen(port);
 var io = require('socket.io').listen(server);
 
@@ -40,6 +40,7 @@ app.get('/', (req, res) => {
 
 app.post('/api/login', routes.LoginDriver);
 app.post('/api/registerDriver', routes.RegisterDriver);
-app.post('/api/registerPassenger', routes.RegisterPassenger);
+app.post('/api/searchNearestDrivers', routes.SearchNearestDrivers);
 app.post('/api/authenticate', routes.Authenticate);
-io.of('/api/updateCurrentLocation').on('connection', UpdateCurrentLocation);
+app.post('/api/updateCurrentLocation', routes.UpdateCurrentLocation);
+// io.of('/api/updateCurrentLocation').on('connection', UpdateCurrentLocation);

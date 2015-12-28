@@ -4,6 +4,9 @@ var LoginModel = require('./models/user.login.schema');
 var PassengerModel = require('./models/passenger.register.schema');
 var UpdateCurrentLocationModel = require('./models/update.current.location.schema');
 
+
+var SearchNearestDriversCtrl = require('./controllers/search.nearest.driver'); 
+
 class Router {
 	
 	constructor (public db:any) {
@@ -39,10 +42,21 @@ class Router {
 		});
 	}
     
-    public RegisterPassenger = (req, res) => {
+    /**
+     * Method will register the searched query in DB and will send a response
+     * to the nearest/closest driver.
+     */
+    public SearchNearestDrivers = (req, res) => {
         var passengerSchema = new PassengerModel(req.body);
         passengerSchema.save( (): void => {
-           res.send(passengerSchema); 
+           res.send(new SearchNearestDriversCtrl(req.body));
+        });
+    }
+    
+    public UpdateCurrentLocation = (req, res) => {
+        var condition = {uid: req.body.uid}, update = {lat: req.body.lat, lng: req.body.lng};
+        UpdateCurrentLocationModel.update(condition, update, (err, numberAffected, response) => {
+            res.send(req.body);
         });
     }
 	
