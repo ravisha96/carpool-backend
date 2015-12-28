@@ -49,7 +49,8 @@ class Router {
     public SearchNearestDrivers = (req, res) => {
         var passengerSchema = new PassengerModel(req.body);
         passengerSchema.save( (): void => {
-           res.send(new SearchNearestDriversCtrl(req.body));
+        //    var searchNearestDrivers = new SearchNearestDriversCtrl(req.body)
+           res.send(passengerSchema);
         });
     }
     
