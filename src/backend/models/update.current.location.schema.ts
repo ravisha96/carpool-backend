@@ -1,3 +1,10 @@
+interface IUpdateCurrentLocation {
+    uid: String,
+    lat: Number,
+    lng: Number,
+    departureTime: Date
+} 
+
 class UpdateCurrentLocation {
     public db = require('mongoose');
     public schema = this.db.Schema;
@@ -7,9 +14,11 @@ class UpdateCurrentLocation {
     }
     
     public LocationSchema = new this.schema({
-       uid: String,
+       uid: {type: String, unique: true},
        lat: Number,
-       lng: Number
+       lng: Number,
+       departureTime: {type: Date},
+       updatedOn: {type: Date, default: Date.now}
     });
     
 }

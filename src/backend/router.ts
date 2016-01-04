@@ -27,17 +27,21 @@ class Router {
 	}
 	
 	public RegisterDriver = (req, res) => {
-		var driverSchema = new DriverModel(req.body);
+        
+        var driver: IDriverRegistration = req.body;
+		var driverSchema = new DriverModel(driver);
         
         var locationSchema = new UpdateCurrentLocationModel({
-            uid: req.body.uid,
-            lat: req.body.from.lat,
-            lng: req.body.from.lng, 
+            uid: driver.uid,
+            lat: driver.from.lat,
+            lng: driver.from.lng,
+            departureTime: driver.startTime
         });
         
-		driverSchema.save( (): void => {
+		driverSchema.save( (err, results): void => {
+            console.log(results);
             locationSchema.save( (): void => {
-               res.send(driverSchema);
+               res.send(results);
             });
 		});
 	}
@@ -48,9 +52,11 @@ class Router {
      */
     public SearchNearestDrivers = (req, res) => {
         var passengerSchema = new PassengerModel(req.body);
+        new SearchNearestDriversCtrl(req.body);
+        
         passengerSchema.save( (): void => {
         //    var searchNearestDrivers = new SearchNearestDriversCtrl(req.body)
-           res.send(passengerSchema);
+           res.send(res.body);
         });
     }
     

@@ -16,10 +16,10 @@ var jwt = require('jsonwebtoken');      // used to create, sign and verify token
 db.connect(setting.db.config);
 
 var routes = new router(db);
-
-var port: number = process.env.PORT || 9001;
+var port: number = process.env.PORT || 7205;
 var server = app.listen(port);
 var io = require('socket.io').listen(server);
+
 
 app.engine('html', viewRenderingEngine);
 app.set('view engine', 'html'); // so you can render('index')

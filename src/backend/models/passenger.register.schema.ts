@@ -15,7 +15,7 @@ class PassengerRegistration {
     public PassengerSchema = new this.schema({
         boarding: this.CordinateSchema,
         destination: this.CordinateSchema,
-        uid:  String
+        uid:  {type: String, unique: true}
     });
 }
 
