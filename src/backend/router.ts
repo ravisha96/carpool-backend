@@ -52,11 +52,9 @@ class Router {
      */
     public SearchNearestDrivers = (req, res) => {
         var passengerSchema = new PassengerModel(req.body);
-        new SearchNearestDriversCtrl(req.body);
         
         passengerSchema.save( (): void => {
-        //    var searchNearestDrivers = new SearchNearestDriversCtrl(req.body)
-           res.send(res.body);
+           res.send(new SearchNearestDriversCtrl(req.body));
         });
     }
     
