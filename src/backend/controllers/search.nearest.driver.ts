@@ -5,7 +5,7 @@
 
 /// <reference path="utility.ts" /> 
 
-import Utilities = require('./Utility');
+import Utilities = require('./utility');
 
 interface ISearchNearestDriver {
     
