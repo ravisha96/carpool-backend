@@ -32,18 +32,15 @@ class SearchNearestDriver extends Utilities {
                 /**
                  * Setting both date on same format.
                  */
-                var passengerTravelingDate = new Date(this.coords.time).toISOString(),
-                    driverTravelingDate = result.departureTime.toISOString();
+                var passengerTravelingDate = new Date(this.coords.time),
+                    driverTravelingDate = new Date(result.departureTime);
                     
-                if(!this.matchDriverTimingWithPassenger(passengerTravelingDate, driverTravelingDate)) return;
-                
-                distance.push({
-                    uid: result.uid,
-                    distance: this.getDistanceBtwnLatLng(this.coords.boarding, result.boardi)
-                });
+                if(!this.matchDriverTimingWithPassenger(passengerTravelingDate.toISOString(), driverTravelingDate.toISOString())) return;
+                result._doc.distance = this.getDistanceBtwnLatLng(this.coords.boarding, result);
+                distance.push(result._doc);
             });
             
-            console.log(distance);
+            return distance;
             
         });
     }

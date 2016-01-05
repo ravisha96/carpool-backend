@@ -43,4 +43,4 @@ app.post('/api/registerDriver', routes.RegisterDriver);
 app.post('/api/searchNearestDrivers', routes.SearchNearestDrivers);
 app.post('/api/authenticate', routes.Authenticate);
 app.post('/api/updateCurrentLocation', routes.UpdateCurrentLocation);
-// io.of('/api/updateCurrentLocation').on('connection', UpdateCurrentLocation);
+io.of('/api/updateCurrentLocation').on('connection', UpdateCurrentLocation);
