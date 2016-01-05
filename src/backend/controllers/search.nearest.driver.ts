@@ -39,7 +39,7 @@ class SearchNearestDriver extends Utilities {
                 
                 distance.push({
                     uid: result.uid,
-                    distance: this.getDistanceBtwnLatLng(this.coords, result)
+                    distance: this.getDistanceBtwnLatLng(this.coords.boarding, result.boardi)
                 });
             });
             
@@ -53,14 +53,9 @@ class SearchNearestDriver extends Utilities {
      * date and time of queried passengers.
      */
     private matchDriverTimingWithPassenger = (passTiming: String, driverTiming: String) => {
-        this.startDate(passTiming).endDate(driverTiming).isGreaterThan();
+        return this.startDate(passTiming).endDate(driverTiming).isGreaterThanEqual();
     }
     
 }
 
 module.exports = SearchNearestDriver;
-
-
-
-SD - 04:01:2015 10:45
-ED - 04-01.2015 10:37
