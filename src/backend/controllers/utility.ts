@@ -10,6 +10,7 @@ interface IUtility {
     isGreaterThanEqual(): Boolean;
     isLessThan(): Boolean;
     isLessThanEqual(): Boolean;
+    isSameDate(): Boolean;
 }
 
 class Utility implements IUtility {
@@ -59,6 +60,10 @@ class Utility implements IUtility {
     public endDate = (date) => {
         this.eDate = new Date(date);
         return this;
+    }
+    
+    public isSameDate = () => {
+        return (this.sDate.getFullYear() === this.eDate.getFullYear() && this.sDate.getDate() === this.eDate.getDate());
     }
     
     /**

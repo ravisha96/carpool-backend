@@ -53,7 +53,7 @@ class SearchNearestDriver extends Utilities {
      * date and time of queried passengers.
      */
     private matchDriverTimingWithPassenger = (passTiming: Date, driverTiming: Date) => {
-        return this.startDate(passTiming).endDate(driverTiming).isGreaterThanEqual();
+        return this.startDate(passTiming).endDate(driverTiming).isSameDate();
     }
 
 }
