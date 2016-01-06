@@ -37,7 +37,7 @@ class SearchNearestDriver extends Utilities {
                     var passengerTravelingDate = new Date(this.coords.time),
                         driverTravelingDate = new Date(result.departureTime);
 
-                    if (!this.matchDriverTimingWithPassenger(passengerTravelingDate.toISOString(), driverTravelingDate.toISOString())) return;
+                    if (!this.matchDriverTimingWithPassenger(passengerTravelingDate, driverTravelingDate)) return;
                     result._doc.distance = this.getDistanceBtwnLatLng(this.coords.boarding, result);
                     distance.push(result._doc);
                 });
@@ -52,7 +52,7 @@ class SearchNearestDriver extends Utilities {
      * matchDriverTimingWithPassenger method filter the drivers that match the nearest 
      * date and time of queried passengers.
      */
-    private matchDriverTimingWithPassenger = (passTiming: String, driverTiming: String) => {
+    private matchDriverTimingWithPassenger = (passTiming: Date, driverTiming: Date) => {
         return this.startDate(passTiming).endDate(driverTiming).isGreaterThanEqual();
     }
 
