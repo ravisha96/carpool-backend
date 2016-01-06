@@ -45,7 +45,7 @@ class DriverRegistration {
 		seats: Number,
 		carType: String,
 		remarks: String,
-		routeId: Object,
+		routeId: String,
 		createdOn: { type: Date, default: Date.now }
 	});
 
