@@ -3,7 +3,7 @@
  */
 
 interface IUtility {
-    getDistanceBtwnLatLng (passCoords: Object, driverCoords: Object): number;
+    getDistanceBtwnLatLng (fromCoords: Object, toCoords: Object): number;
     startDate(date: Date): Object;
     endDate(date: Date): Object;
     isGreaterThan(): Boolean;
@@ -24,15 +24,17 @@ class Utility implements IUtility {
     
     /**
      * getDistanceBtwnLatLng haversine formula to calculate the distance between two coordinates.
+     * @param fromCoords - boarding point coordinates.
+     * @param toCoords - destination point coordinates.
      */
-    public getDistanceBtwnLatLng = (passCoords, driverCoords) => {
+    public getDistanceBtwnLatLng = (fromCoords, toCoords) => {
         var R = 6371; // Radius of the earth in km
         
-        var dLat = this.deg2rad(passCoords.lat - driverCoords.lat); // this.deg2rad below
-        var dLon = this.deg2rad(passCoords.lng - driverCoords.lng);
+        var dLat = this.deg2rad(fromCoords.lat - toCoords.lat); // this.deg2rad below
+        var dLon = this.deg2rad(fromCoords.lng - toCoords.lng);
         var a =
             Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-            Math.cos(this.deg2rad(driverCoords.lat)) * Math.cos(this.deg2rad(passCoords.lat)) *
+            Math.cos(this.deg2rad(toCoords.lat)) * Math.cos(this.deg2rad(fromCoords.lat)) *
             Math.sin(dLon / 2) * Math.sin(dLon / 2);
         var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         var d = R * c; // Distance in km

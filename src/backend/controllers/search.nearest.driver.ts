@@ -31,15 +31,16 @@ class SearchNearestDriver extends Utilities {
 
             this.driversCurrentLocSchema.find((err, results) => {
                 _.forEach(results, (result) => {
-                    /**
-                     * Setting both date on same format.
-                     */
-                    var passengerTravelingDate = new Date(this.coords.time),
-                        driverTravelingDate = new Date(result.departureTime);
 
-                    if (!this.matchDriverTimingWithPassenger(passengerTravelingDate, driverTravelingDate)) return;
+                    if (!this.getDriversTravellingOnSameDate(new Date(this.coords.time), new Date(result.departureTime))) return;
                     result._doc.distance = this.getDistanceBtwnLatLng(this.coords.boarding, result);
-                    distance.push(result._doc);
+                    
+                    /**
+                     * If the calculated distance is more than the radius ignore it.
+                     */
+                    if(result._doc.distance <= this.coords.radius) {
+                        distance.push(result._doc);   
+                    }
                 });
                 
                 defer.resolve(distance);
@@ -49,10 +50,12 @@ class SearchNearestDriver extends Utilities {
     }
     
     /**
-     * matchDriverTimingWithPassenger method filter the drivers that match the nearest 
-     * date and time of queried passengers.
+     * getDriversTravellingOnSameDate method filter the drivers those who are 
+     * travelling on same date as request by passenger.
+     * @param passTiming - passenger date of travelling.
+     * @param driverTiming - driver date of travelling.
      */
-    private matchDriverTimingWithPassenger = (passTiming: Date, driverTiming: Date) => {
+    private getDriversTravellingOnSameDate = (passTiming: Date, driverTiming: Date) => {
         return this.startDate(passTiming).endDate(driverTiming).isSameDate();
     }
 
