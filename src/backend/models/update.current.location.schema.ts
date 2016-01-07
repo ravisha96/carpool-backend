@@ -1,7 +1,7 @@
 interface IUpdateCurrentLocation {
     uid: String,
-    lat: Number,
-    lng: Number,
+    lat: String,
+    lng: String,
     departureTime: Date
 } 
 
@@ -15,8 +15,8 @@ class UpdateCurrentLocation {
     
     public LocationSchema = new this.schema({
        uid: {type: String, unique: true},
-       lat: Number,
-       lng: Number,
+       lat: String,
+       lng: String,
        departureTime: {type: Date},
        updatedOn: {type: Date, default: Date.now}
     });

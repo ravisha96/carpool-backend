@@ -8,8 +8,8 @@ class PassengerRegistration {
     
     private CordinateSchema = new this.schema({
         name: String,
-        lng: Number,
-        lat: Number
+        lng: String,
+        lat: String
     });
     
     public PassengerSchema = new this.schema({

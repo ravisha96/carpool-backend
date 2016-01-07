@@ -1,7 +1,7 @@
 interface ICoords {
     name: String,
-    lng: Number,
-    lat: Number
+    lng: String,
+    lat: String
 }
 
 interface IDriverRegistration {
