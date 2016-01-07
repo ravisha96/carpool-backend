@@ -13,12 +13,15 @@ class Router {
     constructor(public db: any) {
         this.db = db;
     }
-
+    
     public Authenticate = (req, res) => {
-        var loginSchema = new this.LoginModel(req.body);
-        loginSchema.save((): void => {
-            res.send(loginSchema);
+        this.LoginModel.findOne(req.body, (err: String, results: Object) => {
+            res.send(results);
         });
+        // var loginSchema = new this.LoginModel(req.body);
+        // loginSchema.save((): void => {
+        //     res.send(loginSchema);
+        // });
     }
 
     public LoginDriver = (req, res) => {
@@ -40,11 +43,17 @@ class Router {
         });
 
         driverSchema.save((err, results): void => {
-            console.log(results);
             locationSchema.save((): void => {
                 res.send(results);
             });
         });
+    }
+    
+    /**
+     * 
+     */
+    public RegisterDevice = () => {
+        
     }
     
     /**
