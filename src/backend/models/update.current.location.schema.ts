@@ -17,6 +17,9 @@ class UpdateCurrentLocation {
        uid: {type: String, unique: true},
        lat: String,
        lng: String,
+       firstName: String,
+       lastName: String,
+       phone: String,
        departureTime: {type: Date},
        updatedOn: {type: Date, default: Date.now}
     });

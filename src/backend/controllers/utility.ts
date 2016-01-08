@@ -11,6 +11,7 @@ interface IUtility {
     isLessThan(): Boolean;
     isLessThanEqual(): Boolean;
     isSameDate(): Boolean;
+    removeId(response: Object): Object;
 }
 
 class Utility implements IUtility {
@@ -86,6 +87,15 @@ class Utility implements IUtility {
     
     public isLessThanEqual = () => {
         return this.sDate.getTime() <= this.eDate.getTime();
+    }
+    
+    /**
+     * RemoveId method accepts response object and remove the _id
+     */
+    public removeId = (response) => {
+        var key = key || '_id';
+        delete response._doc[key];
+        return response;
     }
 }
 

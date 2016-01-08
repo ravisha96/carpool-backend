@@ -8,20 +8,17 @@ class Router {
     private UpdateCurrentLocationModel = require('./models/update.current.location.schema');
     private SearchNearestDriversCtrl = require('./controllers/search.nearest.driver');
     private Promise = require('q');
+    private async = require('async');
 
 
     constructor(public db: any) {
         this.db = db;
     }
-    
+
     public Authenticate = (req, res) => {
-        this.LoginModel.findOne(req.body, (err: String, results: Object) => {
+        this.LoginModel.findOne({ username: req.body.username, password: req.body.password }, (err: String, results: Object) => {
             res.send(results);
         });
-        // var loginSchema = new this.LoginModel(req.body);
-        // loginSchema.save((): void => {
-        //     res.send(loginSchema);
-        // });
     }
 
     public LoginDriver = (req, res) => {
@@ -30,30 +27,57 @@ class Router {
         });
     }
 
-    public RegisterDriver = (req, res) => {
+    public RegisterDriver = (req, res, next) => {
 
-        var driver: IDriverRegistration = req.body;
-        var driverSchema = new this.DriverModel(driver);
+        console.log(req);
+        var driverQueryDetails,
+            savedUserDetails;
+        this.async.series([
+            (callback) => {
+                var driver: IDriverRegistration = req.body,
+                    driverSchema = new this.DriverModel(driver);
 
-        var locationSchema = new this.UpdateCurrentLocationModel({
-            uid: driver.uid,
-            lat: driver.from.lat,
-            lng: driver.from.lng,
-            departureTime: driver.startTime
-        });
+                driverSchema.save((err, result): void => {
+                    driverQueryDetails = result;
+                    callback();
+                });
+            },
 
-        driverSchema.save((err, results): void => {
-            locationSchema.save((): void => {
-                res.send(results);
-            });
-        });
+            (callback) => {
+                this.LoginModel.findOne({ '_id': req.body.uid }, (err: String, result: Object) => {
+                    savedUserDetails = result;
+                    callback();
+                });
+            },
+
+            (callback) => {
+                var driver: IDriverRegistration = req.body,
+                    currentLocationSchema = new this.UpdateCurrentLocationModel({
+                        uid: driver.uid,
+                        lat: driver.from.lat,
+                        lng: driver.from.lng,
+                        departureTime: driver.startTime,
+                        firstName: savedUserDetails.firstName,
+                        lastName: savedUserDetails.lastName
+                    });
+                currentLocationSchema.save((err, result) => {
+                    callback();
+                });
+            }
+        ], (err, result) => {
+            console.log(err);
+            console.log(result);
+            if (err) return next(err);
+            res.send(result);
+        })
+
     }
     
     /**
      * 
      */
     public RegisterDevice = () => {
-        
+
     }
     
     /**
@@ -62,11 +86,10 @@ class Router {
      */
     public SearchNearestDrivers = (req, res) => {
         var passengerSchema = new this.PassengerModel(req.body);
-        
-        new this.SearchNearestDriversCtrl(req.body).fetchDriversLocation()
-            .then((data) => {
-                res.send(data);
-            });
+
+        new this.SearchNearestDriversCtrl(req.body).fetchDriversLocation().then((data) => {
+            res.send(data);
+        });
     }
 
     public UpdateCurrentLocation = (req, res) => {
