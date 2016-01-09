@@ -1,6 +1,6 @@
 {
   "name": "Carpool",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A carpooling tool especially developed for Nagarro Softwares. ",
   "main": "server.js",
   "scripts": {
