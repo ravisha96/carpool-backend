@@ -45,9 +45,6 @@ app.post('/api/registerDevice', function (req, res) {
     console.log(req, res);    
 });
 
-console.log(RegisterDriver);
-
-
 app.post('/api/registerDriver', RegisterDriver);
 app.post('/api/searchNearestDrivers', routes.SearchNearestDrivers);
 app.post('/api/authenticate', routes.Authenticate);
