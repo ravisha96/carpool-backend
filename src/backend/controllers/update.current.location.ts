@@ -22,7 +22,6 @@ class UpdateCurrentLocationController {
     private updateLocation = (data: IUpdateLocation) => {
         var condition = {uid: data.uid},
             update = {lat: data.lat, lng: data.lng};
-        console.log('updating :' + this.UpdateCurrentLocationModel);
         this.UpdateCurrentLocationModel.update(condition, update, (err, numberAffected, response) => {
             this.socket.emit('location:updated', numberAffected);
         });

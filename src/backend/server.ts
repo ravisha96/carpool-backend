@@ -6,13 +6,14 @@ import db = require('mongoose');
 import router = require('./router');
 import interceptor = require('./interceptor');
 
-var UpdateCurrentLocation = require('./controllers/update.current.location');
-var setting = require('./config').setting;
-var viewRenderingEngine = require('ejs-mate');
-var bodyParser = require('body-parser');
-var app: express.Express = express();
-var jwt = require('jsonwebtoken');      // used to create, sign and verify tokens.
-var gcm = require('node-gcm');
+var UpdateCurrentLocation = require('./controllers/update.current.location'),
+    RegisterDriver = require('./controllers/register.driver.request'),
+    setting = require('./config').setting,
+    viewRenderingEngine = require('ejs-mate'),
+    bodyParser = require('body-parser'),
+    app: express.Express = express(),
+    jwt = require('jsonwebtoken'),      // used to create, sign and verify tokens.
+    gcm = require('node-gcm');
 // Connecting to mongodb.
 db.connect(setting.db.config);
 
@@ -44,7 +45,10 @@ app.post('/api/registerDevice', function (req, res) {
     console.log(req, res);    
 });
 
-app.post('/api/registerDriver', routes.RegisterDriver);
+console.log(RegisterDriver);
+
+
+app.post('/api/registerDriver', RegisterDriver);
 app.post('/api/searchNearestDrivers', routes.SearchNearestDrivers);
 app.post('/api/authenticate', routes.Authenticate);
 app.post('/api/updateCurrentLocation', routes.UpdateCurrentLocation);
