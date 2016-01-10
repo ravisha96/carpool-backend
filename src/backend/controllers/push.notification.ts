@@ -7,7 +7,7 @@ class PushNotification {
     private gcm = require('node-gcm');
     private Promise = require('q');
     private UserModel = require('../models/user.login.schema');
-    private api: String = 'AIzaSyC9N9RtiwTIU0hA4c9jLVICxXMGeChT23s';
+    private api: String = '373866320263';
     private retryTimes: Number = 4;
     private sender;
     private deviceToken: Array<String> = [];
@@ -55,7 +55,8 @@ class PushNotification {
             console.log(this.deviceToken);
             this.sender.send(this.message, this.deviceToken, this.retryTimes, (result) => {
                 console.log(result);
-                console.log(result);
+                console.log(this.message);
+                
                 console.log('push send to: '+ this.deviceToken);
                 res.send('ok');
             });
