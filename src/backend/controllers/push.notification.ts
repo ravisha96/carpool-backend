@@ -52,13 +52,13 @@ class PushNotification {
 
         this.getDeviceId(req).then((response) => {
             this.deviceToken.push(response.deviceToken);
+            console.log(this.deviceToken);
             this.sender.send(this.message, this.deviceToken, this.retryTimes, (result) => {
                 console.log(result);
+                console.log(result);
                 console.log('push send to: '+ this.deviceToken);
-                
+                res.send('ok');
             });
-            
-            res.send('ok');
         });
     }
 }
