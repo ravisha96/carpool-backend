@@ -24,17 +24,6 @@ class Router {
         });
     }
     
-    /**
-     * RegisterDevice method register users device and update the login table.
-     */
-    public RegisterDevice = (req, res) => {
-        var condition = { '_id': req.headers.authorization },
-            update = req.body;
-            console.log(update);
-        this.UserModel.update(condition, update, { upsert: true }, (err, results) => {
-            res.send(err || results);
-        });
-    }
     
     /**
      * Method will register the searched query in DB and will send a response
