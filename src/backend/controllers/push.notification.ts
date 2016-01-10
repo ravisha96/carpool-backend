@@ -7,7 +7,7 @@ class PushNotification {
     private gcm = require('node-gcm');
     private Promise = require('q');
     private UserModel = require('../models/user.login.schema');
-    private api: String = '373866320263';
+    private api: String = 'AIzaSyC9N9RtiwTIU0hA4c9jLVICxXMGeChT23s';
     private retryTimes: Number = 4;
     private sender;
     private deviceToken: Array<String> = [];
