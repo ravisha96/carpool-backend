@@ -13,6 +13,7 @@ class UserLogin {
 		lastName: String,
 		username: String,
 		password: String,
+        deviceToken: String,
 		isVerified: {type: Boolean, default: true},
 		status: {type: String, default: 'enable'},
 		createdOn: {type: Date, default: Date.now}
