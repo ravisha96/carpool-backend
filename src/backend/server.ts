@@ -41,11 +41,7 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
-app.post('/api/notification', function (req, res) {
-    console.log(req.body.deviceToken);
-    res.send('ok');
-});
-
+app.post('/api/registerDevice', routes.RegisterDevice);
 app.post('/api/registerDriver', RegisterDriver);
 app.post('/api/searchNearestDrivers', routes.SearchNearestDrivers);
 app.post('/api/authenticate', routes.Authenticate);
