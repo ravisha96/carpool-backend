@@ -30,8 +30,11 @@ class Interceptor {
          * 
          * Authorization key is only checked if user make a api call. Else it will validate and other
          * middlewares will be triggered with next().
+         * 
+         * Exception added for /api/authenticate, this call is the initial call to authenticate a user.
+         * This request, responds with UID which is stored in frontend.
          */
-        if (req.method === 'OPTIONS' || !req.originalUrl.match('/api/')) {
+        if (req.method === 'OPTIONS' || !req.originalUrl.match('/api/') || req.originalUrl.match('/api/authenticate')) {
             next();
             return;
         } else {
