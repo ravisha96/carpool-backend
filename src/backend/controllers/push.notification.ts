@@ -47,8 +47,8 @@ class PushNotification {
         this.sender = new this.gcm.Sender(this.api);
         this.message = new this.gcm.Message();
         this.message.addData('title', 'New Notification');
-        this.message.addDate('message', 'Hello! this is new notification');
-        this.message.addDate('sound', 'notification');
+        this.message.addData('message', 'Hello! this is new notification');
+        this.message.addData('sound', 'notification');
 
         this.getDeviceId(req).then((response) => {
             this.deviceToken.push(response.deviceToken);
