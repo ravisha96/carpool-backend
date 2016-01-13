@@ -22,9 +22,7 @@ class PushNotification {
      * Method register deviceId against the user table.
      */
     public registerDevice = (req, res, next) => {
-        console.log(this.url.parse(req.url, true).id);
-        
-        var condition = { '_id': this.url.parse(req.url, true).id },
+        var condition = { '_id': req.headers.authorization },
             update = req.body;
 
         this.UserModel.update(condition, update, (err, result) => {
@@ -34,7 +32,7 @@ class PushNotification {
 
     private getDeviceId = (req) => {
         var defer = this.Promise.defer();
-        this.UserModel.findById(this.url.parse(req.url, true).id, (err, result) => {
+        this.UserModel.findById(this.url.parse(req.url, true).query.id, (err, result) => {
             if (result) {
                 defer.resolve(result);
                 return;
@@ -52,7 +50,6 @@ class PushNotification {
         this.message.addData('title', 'New Notification');
         this.message.addData('message', 'Hello! this is new notification');
         this.message.addData('sound', 'notification');
-
         this.getDeviceId(req).then((response) => {
             this.deviceToken.push(response.deviceToken);
             console.log(this.deviceToken);
@@ -63,6 +60,8 @@ class PushNotification {
                 console.log('push send to: '+ this.deviceToken);
                 res.send('ok');
             });
+        }, function (err) {
+            res.send(err);
         });
     }
 }
