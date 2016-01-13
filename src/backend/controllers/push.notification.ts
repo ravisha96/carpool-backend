@@ -52,12 +52,12 @@ class PushNotification {
         this.message.addData('sound', 'notification');
         this.getDeviceId(req).then((response) => {
             this.deviceToken.push(response.deviceToken);
-            console.log(this.deviceToken);
-            this.sender.send(this.message, this.deviceToken, this.retryTimes, (result) => {
+            console.log(response.deviceToken);
+            this.sender.send(this.message, response.deviceToken, this.retryTimes, (result) => {
                 console.log(result);
                 console.log(this.message);
                 
-                console.log('push send to: '+ this.deviceToken);
+                console.log('push send to: '+ response.deviceToken);
                 res.send('ok');
             });
         }, function (err) {
