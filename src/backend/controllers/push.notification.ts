@@ -6,6 +6,7 @@ class PushNotification {
 
     private gcm = require('node-gcm');
     private Promise = require('q');
+    private url = require('url');
     private UserModel = require('../models/user.login.schema');
     private api: String = 'AIzaSyC9N9RtiwTIU0hA4c9jLVICxXMGeChT23s';
     private retryTimes: Number = 4;
@@ -21,7 +22,9 @@ class PushNotification {
      * Method register deviceId against the user table.
      */
     public registerDevice = (req, res, next) => {
-        var condition = { '_id': req.headers.authorization },
+        console.log(this.url.parse(req.url, true).id);
+        
+        var condition = { '_id': this.url.parse(req.url, true).id },
             update = req.body;
 
         this.UserModel.update(condition, update, (err, result) => {
@@ -31,7 +34,7 @@ class PushNotification {
 
     private getDeviceId = (req) => {
         var defer = this.Promise.defer();
-        this.UserModel.findById(req.headers.authorization, (err, result) => {
+        this.UserModel.findById(this.url.parse(req.url, true).id, (err, result) => {
             if (result) {
                 defer.resolve(result);
                 return;
