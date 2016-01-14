@@ -68,9 +68,7 @@ class PushNotification {
         this.message.addData('title', 'Share Ride');
         this.message.addData('message', '');
         this.message.addData('sound', 'notification');
-        this.message.addData('data', {
-            'state': this.const.pushNotification.url.confirmPassenger
-        });
+        
         return this.message;
     }
     
