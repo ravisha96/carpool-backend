@@ -14,7 +14,7 @@ class PushNotification {
     private retryTimes: Number = 4;
     private sender;
     private deviceToken: Array<String> = [];
-    private message;
+    private reqBody;
 
     public const: IConstants = this.constant;
 
@@ -33,11 +33,11 @@ class PushNotification {
     }
     
     /**
-     * getDeviceId method get the device of the driver who will be notified.
+     * getUsersDetails method get the device of the driver who will be notified.
      * This device id is update when driver/passenger create any new ride request,
      *  and saved against the user table.
      */
-    private getDeviceId = (uid) => {
+    private getUsersDetails = (uid) => {
         var defer = this.Promise.defer();
         this.UserModel.findById(uid, (err, result) => {
             if (result) {
@@ -56,7 +56,7 @@ class PushNotification {
      */
     private getPassengerDetails = (req) => {
         var defer = this.Promise.defer();
-        this.UserModel.find
+        // this.UserModel.find
     }
     
     /**
@@ -64,12 +64,20 @@ class PushNotification {
      * while notifying for new passenger request.
      */
     private createMessage = () => {
-        this.message = new this.gcm.Message();
-        this.message.addData('title', 'Share Ride');
-        this.message.addData('message', '');
-        this.message.addData('sound', 'notification');
+        var defer = this.Promise.defer();
+        this.getUsersDetails(this.reqBody.passenger.uid).then((user)=> {
+            var message = new this.gcm.Message();
+            message.addData('title', 'Share Ride');
+            message.addData('message', user.firstName + ' ' + user.lastName || ' ' + ' wants to share your ride.');
+            message.addData('sound', 'notification');
+            
+            console.log(user.firstName + ' ' + user.lastName || ' ' + ' wants to share your ride.');
+            
+            defer.resolve(message);
+        });
         
-        return this.message;
+        
+        return defer.promise;
     }
     
     /**
@@ -82,24 +90,30 @@ class PushNotification {
     }
 
     private notify = (deviceToken: String) => {
-        this.sender.send(this.createMessage(), deviceToken, this.retryTimes, (result) => {
-            console.log(result);
+        this.createMessage().then((msg)=> {
+            this.sender.send(msg, deviceToken, this.retryTimes, (result) => {
+                console.log(result);
+            }); 
         });
     }
+    
     
     /**
      * start method initiate the process of notifying the driver about new request
      * from passenger. It also insert the passenger query in the passenger table.
      */
     public start = (req, res, next) => {
+        this.reqBody = req.body;
         this.sender = new this.gcm.Sender(this.api);
-        this.getDeviceId(req.body.uid).then((response) => {
+        this.getUsersDetails(req.body.uid).then((response) => {
 
             new this.registerPassenger().saveNewCarPoolRequest(req.body.passenger, req.body.uid).then((numberAffected, update) => {
                 this.notify(response.deviceToken);
                 res.send({ success: this.const.messages.passenger.onSuccessPushNotification });
+                this.reqBody = null;
             }, function() {
                 res.send({ error: this.const.messages.passenger.onFailRegistration });
+                this.reqBody = null;
             });
         }, function(err) {
             res.send(err);
