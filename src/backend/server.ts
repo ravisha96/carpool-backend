@@ -42,7 +42,7 @@ app.get('/', (req, res) => {
 });
 
 app.post('/api/registerDevice', pushNotification.registerDevice);
-app.get('/api/pushNotification', pushNotification.start);
+app.post('/api/pushNotification', pushNotification.start);
 app.post('/api/registerDriver', RegisterDriver);
 app.post('/api/searchNearestDrivers', routes.SearchNearestDrivers);
 app.post('/api/authenticate', routes.Authenticate);

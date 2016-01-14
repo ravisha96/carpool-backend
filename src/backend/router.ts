@@ -3,7 +3,6 @@ import mongoose = require('mongoose');
 class Router {
 
     private UserModel = require('./models/user.login.schema');
-    private PassengerModel = require('./models/passenger.register.schema');
     private UpdateCurrentLocationModel = require('./models/update.current.location.schema');
     private SearchNearestDriversCtrl = require('./controllers/search.nearest.driver');
 
@@ -30,7 +29,6 @@ class Router {
      * to the nearest/closest driver.
      */
     public SearchNearestDrivers = (req, res) => {
-        var passengerSchema = new this.PassengerModel(req.body);
         new this.SearchNearestDriversCtrl(req.body).fetchDriversLocation().then((data) => {
             res.send(data);
         });

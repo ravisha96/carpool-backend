@@ -15,6 +15,7 @@ class PassengerRegistration {
     public PassengerSchema = new this.schema({
         boarding: this.CordinateSchema,
         destination: this.CordinateSchema,
+        drivers: Array,
         uid:  {type: String, unique: true}
     });
 }
