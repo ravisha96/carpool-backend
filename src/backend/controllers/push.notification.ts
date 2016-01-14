@@ -15,10 +15,10 @@ class PushNotification {
     private sender;
     private deviceToken: Array<String> = [];
     private message;
-    
+
     public const: IConstants = this.constant;
-    
-    constructor() {}
+
+    constructor() { }
     
     /**
      * Method register deviceId against the user table.
@@ -70,8 +70,7 @@ class PushNotification {
         this.message.addData('sound', 'notification');
         this.message.addData('data', {
             'state': this.const.pushNotification.url.confirmPassenger
-        })
-        
+        });
         return this.message;
     }
     
@@ -83,6 +82,12 @@ class PushNotification {
             state: this.const.pushNotification.url.confirmPassenger
         }
     }
+
+    private notify = (deviceToken: String) => {
+        this.sender.send(this.createMessage(), deviceToken, this.retryTimes, (result) => {
+            console.log(result);
+        });
+    }
     
     /**
      * start method initiate the process of notifying the driver about new request
@@ -91,14 +96,12 @@ class PushNotification {
     public start = (req, res, next) => {
         this.sender = new this.gcm.Sender(this.api);
         this.getDeviceId(req.body.uid).then((response) => {
-            
+
             new this.registerPassenger().saveNewCarPoolRequest(req.body.passenger, req.body.uid).then((numberAffected, update) => {
-                this.sender.send(this.createMessage(), response.deviceToken, this.retryTimes, (result)=> {
-                   console.log(result); 
-                });
-                res.send({success: this.const.messages.passenger.onSuccessPushNotification});
+                this.notify(response.deviceToken);
+                res.send({ success: this.const.messages.passenger.onSuccessPushNotification });
             }, function() {
-                res.send({error: this.const.messages.passenger.onFailRegistration});
+                res.send({ error: this.const.messages.passenger.onFailRegistration });
             });
         }, function(err) {
             res.send(err);

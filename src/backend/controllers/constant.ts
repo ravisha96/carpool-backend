@@ -49,4 +49,4 @@ class Constants {
     }
 }
 
-module.exports = new Constants();
+module.exports = new Constants().constants;
