@@ -58,25 +58,57 @@ class PushNotification {
      */
     private createMessage = () => {
         var defer = this.Promise.defer();
-        this.getUsersDetails(this.reqBody.passenger.uid).then((user) => {
-            var customeMsg = (user.firstName + ' ' + user.lastName + ' wants to share your ride.');
-            var message = new this.gcm.Message();
-                message.timeToLive = 3000,           // Duration in seconds to hold in GCM and retry before timing out. Default 4 weeks when not specified.
-                message.priority = 'high',
-                message.addData({
-                    'title': 'Share Ride',
-                    'soundname': '',        //Sound to play upon notification receipt put in the www folder in app   
-                    'message': customeMsg,
-                    'sound': 'notification',
-                    'icon': '',         //icon to display put in the www folder in app
-                    'uid': user._id,
-                    'firstName': user.firstName,
-                    'lastName': user.lastName
-                });
 
-            defer.resolve(message);
+        this.getPassengersCoords().then((coords) => {
+            this.getUsersDetails(this.reqBody.passenger.uid).then((user) => {
+                var customeMsg = (user.firstName + ' ' + user.lastName + ' wants to share your ride.');
+                var message = new this.gcm.Message();
+                message.timeToLive = 3000,           // Duration in seconds to hold in GCM and retry before timing out. Default 4 weeks when not specified.
+                    message.priority = 'high',
+                    message.addData({
+                        'title': 'Share Ride',
+                        'soundname': '',        //Sound to play upon notification receipt put in the www folder in app   
+                        'message': customeMsg,
+                        'sound': 'notification',
+                        'icon': '',         //icon to display put in the www folder in app
+                        'data': {
+                            'uid': user._id,
+                            'firstName': user.firstName,
+                            'lastName': user.lastName,
+                            'phone': user.phone,
+                            'boarding': coords.boarding,
+                            'destination': coords.destination,
+                            'drivers': coords.drivers 
+                        }
+                    });
+
+                defer.resolve(message);
+            }, (error)=> {
+                defer.reject(error);
+            });
+        }, (error) => {
+            defer.reject(error);
         });
 
+
+        return defer.promise;
+    }
+    
+    /**
+     * getPassengersCoords method fetch the coordinates of the passenger 
+     */
+    private getPassengersCoords = () => {
+        var passenger = require('../models/register.passenger.request'),
+            defer = this.Promise.defer();
+
+        passenger.findOne({ uid: this.reqBody.passenger.uid }, (err, result) => {
+            if (err) {
+                defer.reject(err);
+                return;
+            }
+
+            defer.resolve(result);
+        });
 
         return defer.promise;
     }
