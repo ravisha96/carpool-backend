@@ -58,31 +58,30 @@ class PushNotification {
      */
     private createMessage = () => {
         var defer = this.Promise.defer();
-        this.getUsersDetails(this.reqBody.passenger.uid).then((user)=> {
-            var customeMsg = (user.firstName + ' ' + user.lastName + ' wants to share your ride.'),
+        this.getUsersDetails(this.reqBody.passenger.uid).then((user) => {
+            var customeMsg = (user.firstName + ' ' + user.lastName + ' wants to share your ride.');
             var message = new this.gcm.Message({
                 timeToLive: 3000,           // Duration in seconds to hold in GCM and retry before timing out. Default 4 weeks when not specified.
                 priority: 'high',
-                
                 data: {
-                    'uid': user.uid,
+                    'uid': user._id,
                     'firstName': user.firstName,
                     'lastName': user.lastName
-                },
-                notification: {
-                    'title': 'Share Ride',
-                    'soundname': '',        //Sound to play upon notification receipt put in the www folder in app   
-                    'message': customeMsg,
-                    'sound': 'notification',
-                    'msgcnt': '3',
-                    'icon': '',         //icon to display put in the www folder in app
                 }
             });
-            
+
+            message.addData({
+                'title': 'Share Ride',
+                'soundname': '',        //Sound to play upon notification receipt put in the www folder in app   
+                'message': customeMsg,
+                'sound': 'notification',
+                'msgcnt': '3',
+                'icon': ''         //icon to display put in the www folder in app
+            })
             defer.resolve(message);
         });
-        
-        
+
+
         return defer.promise;
     }
     
@@ -92,10 +91,10 @@ class PushNotification {
      * @param deviceToken - specific id of the device.
      */
     private notify = (deviceToken: String) => {
-        this.createMessage().then((msg)=> {
-            this.sender.send(msg, deviceToken, this.retryTimes, 4, (result) => {
+        this.createMessage().then((msg) => {
+            this.sender.send(msg, deviceToken, this.retryTimes, (result) => {
                 console.log(result);
-            }); 
+            });
         });
     }
     
