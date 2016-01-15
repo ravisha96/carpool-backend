@@ -69,10 +69,12 @@ class PushNotification {
                         'message': customeMsg,
                         'sound': 'notification',
                         'icon': '',         //icon to display put in the www folder in app
-                        'uid': user._id,
-                        'firstName': user.firstName,
-                        'lastName': user.lastName,
-                        'phone': user.phone,
+                        'data': {
+                            'uid': user._id,
+                            'firstName': user.firstName,
+                            'lastName': user.lastName,
+                            'phone': user.phone,   
+                        }
                     });
 
                 defer.resolve(message);
