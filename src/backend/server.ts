@@ -20,10 +20,10 @@ db.connect(setting.db.config);
 
 var routes = new router(db);
 var port: number = process.env.PORT || 3000;
-var server = app.listen(port);
+var server: any = app.listen(port);
 var io = require('socket.io').listen(server);
 
-
+server.timeout = 1000;  // increasing the default request time.
 app.engine('html', viewRenderingEngine);
 app.set('view engine', 'html'); // so you can render('index')
 
