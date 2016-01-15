@@ -58,8 +58,6 @@ class PushNotification {
      */
     private createMessage = () => {
         var defer = this.Promise.defer();
-
-        // this.getPassengersCoords().then((coords) => {
             this.getUsersDetails(this.reqBody.passenger.uid).then((user) => {
                 var customeMsg = (user.firstName + ' ' + user.lastName + ' wants to share your ride.');
                 var message = new this.gcm.Message();
@@ -70,39 +68,20 @@ class PushNotification {
                         'soundname': '',        //Sound to play upon notification receipt put in the www folder in app   
                         'message': customeMsg,
                         'sound': 'notification',
-                        'icon': ''         //icon to display put in the www folder in app
+                        'icon': '',         //icon to display put in the www folder in app
+                        'uid': user._id,
+                        'firstName': user.firstName,
+                        'lastName': user.lastName,
+                        'phone': user.phone,
                     });
 
                 defer.resolve(message);
-            }, (error)=> {
-                defer.reject(error);
             });
-        // }, (error) => {
-            // defer.reject(error);
-        // });
 
 
         return defer.promise;
     }
-    
-    /**
-     * getPassengersCoords method fetch the coordinates of the passenger 
-     */
-    private getPassengersCoords = () => {
-        var passenger = require('../models/passenger.register.schema'),
-            defer = this.Promise.defer();
 
-        passenger.findOne({ uid: this.reqBody.passenger.uid }, (err, result) => {
-            if (err) {
-                defer.reject(err);
-                return;
-            }
-
-            defer.resolve(result);
-        });
-
-        return defer.promise;
-    }
     
     /**
      * notify method trigger the push notification to the specific device.
