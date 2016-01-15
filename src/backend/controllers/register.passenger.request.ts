@@ -21,7 +21,6 @@ class RegisterPassengerCtrl {
         var defer = this.Promise.defer(),
             condition = { uid: data.uid }, update = data;
         this.PassengerModel.update(condition, { $set: update, $addToSet: { drivers: { $each: [uid] } } }, { upsert: true }, (err, numberAffected, response) => {
-            console.log(numberAffected);
             
             if (err) {
                 defer.reject(err)

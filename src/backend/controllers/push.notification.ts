@@ -91,7 +91,7 @@ class PushNotification {
     private notify = (deviceToken: String) => {
         this.createMessage().then((msg) => {
             this.sender.send(msg, deviceToken, this.retryTimes, (result) => {
-                console.log(result);
+                console.log('push notification: ' + result);
             });
         });
     }
