@@ -71,15 +71,6 @@ class PushNotification {
                         'message': customeMsg,
                         'sound': 'notification',
                         'icon': '',         //icon to display put in the www folder in app
-                        'data': {
-                            'uid': user._id,
-                            'firstName': user.firstName,
-                            'lastName': user.lastName,
-                            'phone': user.phone,
-                            'boarding': coords.boarding,
-                            'destination': coords.destination,
-                            'drivers': coords.drivers 
-                        }
                     });
 
                 defer.resolve(message);
