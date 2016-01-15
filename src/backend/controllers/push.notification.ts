@@ -70,16 +70,7 @@ class PushNotification {
                         'soundname': '',        //Sound to play upon notification receipt put in the www folder in app   
                         'message': customeMsg,
                         'sound': 'notification',
-                        'icon': '',         //icon to display put in the www folder in app
-                        'data': {
-                            'uid': user._id,
-                            'firstName': user.firstName,
-                            'lastName': user.lastName,
-                            'phone': user.phone,
-                            'boarding': coords.boarding,
-                            'destination': coords.destination,
-                            'drivers': coords.drivers 
-                        }
+                        'icon': ''         //icon to display put in the www folder in app
                     });
 
                 defer.resolve(message);
