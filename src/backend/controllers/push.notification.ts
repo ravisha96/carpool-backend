@@ -71,6 +71,15 @@ class PushNotification {
                         'message': customeMsg,
                         'sound': 'notification',
                         'icon': '',         //icon to display put in the www folder in app
+                        'data': {
+                            'uid': user._id,
+                            'firstName': user.firstName,
+                            'lastName': user.lastName,
+                            'phone': user.phone,
+                            'boarding': coords.boarding,
+                            'destination': coords.destination,
+                            'drivers': coords.drivers 
+                        }
                     });
 
                 defer.resolve(message);
@@ -89,7 +98,7 @@ class PushNotification {
      * getPassengersCoords method fetch the coordinates of the passenger 
      */
     private getPassengersCoords = () => {
-        var passenger = require('../models/register.passenger.request'),
+        var passenger = require('../models/passenger.register.schema'),
             defer = this.Promise.defer();
 
         passenger.findOne({ uid: this.reqBody.passenger.uid }, (err, result) => {
